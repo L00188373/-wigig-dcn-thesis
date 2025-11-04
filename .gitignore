@@ -1,0 +1,28 @@
+# Build files
+*.o
+*.so
+*.pyc
+__pycache__/
+
+# Editor files
+*~
+*.swp
+.DS_Store
+.vscode/
+.idea/
+
+# Temporary files
+*.log
+*.tmp
+
+# Large directories (don't upload entire ns-3)
+ns-allinone-3.40/
+build/
+
+# Keep only our specific files
+!dcn-4node-modified.cc
+!dcn-4node-BACKUP.cc
+!final_results.txt
+!mcs_data.csv
+!parse_results.py
+!README.md

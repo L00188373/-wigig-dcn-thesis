@@ -56,7 +56,7 @@ cd ~/ns-allinone-3.40/ns-3.40
 - Performance comparison: pure vs. hybrid
 
 **Acknowledgment:**  
-Based on expert feedback from ns-3 core developer)via [ns-3-users mailing list](https://groups.google.com/g/ns-3-users), November 2025:
+Based on expert feedback from ns-3 core developer)via [ns-3-users mailing list] November 2025:
 
 > "Start by drawing a careful diagram of the network setup, i.e., who's going to decide what link to use. If the application should be oblivious of the fact that you have 2 links, you'll need a shim layer to redirect the flows."
 

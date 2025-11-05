@@ -31,6 +31,7 @@ Performance Analysis of 60 GHz Wireless Links as Supplementary Interconnects in 
 ## Quick Start
 ```bash
 # Baseline (5 min)
+cd ~/ns-allinone-3.40/ns-3.40
 ./ns3 run scratch/dcn-4node-modified
 
 # Hybrid (10 sec)

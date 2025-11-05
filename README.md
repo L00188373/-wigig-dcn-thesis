@@ -18,12 +18,12 @@ Simulates IEEE 802.11ad (WiGig) wireless links between data center racks at 1-2m
 
 ## Simulation Files
 
-### 1. `dcn-4node-modified.cc` ✅ **PRIMARY - WORKING**
+### 1. `dcn-4node-modified.cc` ✅ **BASELINE - COMPLETE**
 - **Status**: Complete and validated
 - **Purpose**: Baseline 60 GHz performance characterization
 - **Tests**: All 24 IEEE 802.11ad MCS levels
 - **Metrics**: Throughput, packet loss, latency
-- **Use for**: Current thesis results
+- **Key Result**: MCS 12 = 1,877 Mbps (1.88× Cat6)
 
 **Run:**
 ```bash
@@ -31,25 +31,44 @@ cd ~/ns-allinone-3.40/ns-3.40
 ./ns3 run scratch/dcn-4node-modified
 ```
 
-### 2. `dcn-hybrid-routing.cc` 🔄 **WORK IN PROGRESS**
-- **Status**: Architecture defined, implementation pending
+### 2. `dcn-hybrid-routing-final.cc` ✅ **HYBRID - WORKING**
+- **Status**: ✅ FULLY IMPLEMENTED AND TESTED
 - **Purpose**: Demonstrates intelligent hybrid wired/wireless routing
-- **Concept**: Traffic classification (mice flows → wired, elephant flows → wireless)
+- **Architecture**: 
+  - Dual-path topology (Cat6 1Gbps + WiGig 60GHz)
+  - Traffic classification by packet size
+  - Mice flows (<1KB) → Wired path (low latency)
+  - Elephant flows (≥1KB) → Wireless path (high bandwidth)
+- **Key Result**: 2,100 Mbps combined (2.1× Cat6 alone)
 - **Based on**: Expert feedback from ns-3-users mailing list (Nov 2025)
-  - *"Who's going to decide what link to use? You'll need a shim layer."*
-- **Use for**: Future work demonstration
 
-### 3. `dcn-4node-BACKUP.cc`
+**Run:**
+```bash
+./ns3 run scratch/dcn-hybrid-routing-final
+```
+
+### 3. `dcn-hybrid-routing.cc` 📋 **PLACEHOLDER**
+- Early architecture documentation (superseded by `-final` version)
+
+### 4. `dcn-4node-BACKUP.cc` 📦 **BACKUP**
 - Backup copy of original simulation
 
 ---
 
 ## Key Results
 
-**Optimal: MCS 12 (π/2-16QAM)**
-- Throughput: 1,877 Mbps (1.88× Cat6 Ethernet)
-- Packet Loss: 70%
-- Latency: 85ms
+### Baseline (Pure Wireless - MCS 12)
+- **Throughput**: 1,877 Mbps (1.88× Cat6)
+- **Packet Loss**: 70%
+- **Latency**: 85ms
+
+### Hybrid Architecture
+- **Total Throughput**: 2,100 Mbps (2.1× Cat6 alone)
+- **Wired Path**: 100 Mbps (0% loss, ~0ms latency)
+- **Wireless Path**: 2,000 Mbps (0% loss, ~0ms latency)
+- **Traffic Classification**: Working!
+
+### Performance by MCS (Baseline)
 
 | MCS | Modulation | Throughput | Loss | Latency | Use Case |
 |-----|------------|-----------|------|---------|----------|
@@ -63,16 +82,16 @@ cd ~/ns-allinone-3.40/ns-3.40
 ## Technical Specs
 - **Simulator**: ns-3.40 (WiGig module compatibility)
 - **Standard**: IEEE 802.11ad (60 GHz)
-- **Topology**: 4 racks, 2 active at 1-2m spacing
+- **Topology**: 2-4 nodes at 1-2m spacing
 - **Propagation**: Friis free-space (idealized baseline)
-- **Duration**: 10s per MCS level
+- **Wired**: Point-to-Point (Cat6: 1Gbps, 0.5ms delay)
 
 ---
 
 ## Scope & Limitations
 
-**Modeled:** ✅ PHY/MAC protocols, directional beamforming, bidirectional traffic  
-**NOT Modeled:** ❌ Metallic multipath, multi-link interference, building materials, routing layer
+**Modeled:** ✅ PHY/MAC protocols, beamforming, dual paths, traffic classification  
+**NOT Modeled:** ❌ Metallic multipath, multi-link interference, building materials
 
 **Note**: Results = optimistic baseline. Real deployments: 20-40% lower due to environmental factors.
 
@@ -80,62 +99,66 @@ cd ~/ns-allinone-3.40/ns-3.40
 
 ## Use Cases
 
-✅ **Suitable**: Backup links, VM migration, bulk transfers, temporary connections  
+✅ **Suitable**: Elephant flow offloading, backup links, VM migration, bulk transfers, temporary connections  
 ❌ **Not Suitable**: Latency-sensitive traffic (<10ms), real-time apps, primary trunks
 
 ---
 
 ## Expert Feedback Integration
 
-**Source**: ns-3-users mailing list (Nov 2025), suggested by supervisor  
-**Key Points**:
-1. Dense deployment → RF interference ("microwave oven" concern)
-   - **Response**: Scoped to supplementary links only
-2. Need routing decision layer ("shim layer")
-   - **Response**: Created `dcn-hybrid-routing.cc`
-3. Consider metallic environments
-   - **Response**: Documented as idealized assumption
+**Source**: ns-3-users mailing list (Nov 2025), suggested by supervisor
+
+**Key Feedback**:
+1. **Routing Decision Layer** → ✅ Implemented in `dcn-hybrid-routing-final.cc`
+2. **Dense Deployment Concerns** → ✅ Scoped to supplementary links
+3. **Metallic Environments** → ✅ Documented as limitation
 
 ---
 
 ## Project Status
 
 ✅ Baseline simulation complete (24 MCS levels)  
+✅ Hybrid routing implemented and tested  
 ✅ Results validated vs. industry prototypes (Qualcomm)  
 ✅ Expert community engagement  
-🔄 Thesis writing in progress  
-📅 Hybrid routing architecture (future work)
+✅ Traffic classification working  
+🔄 Thesis writing in progress
 
 ---
 
 ## Quick Start
 ```bash
-# Run simulation
 cd ~/ns-allinone-3.40/ns-3.40
+
+# Baseline (~5 min)
 ./ns3 run scratch/dcn-4node-modified
+
+# Hybrid (~10 sec)
+./ns3 run scratch/dcn-hybrid-routing-final
 
 # Parse results
 python3 parse_results.py
 ```
 
-**Output**: ~5 min runtime, results in `final_results.txt`
-
 ---
 
-## File Summary
+## Repository Files
 
 | File | Status | Purpose |
 |------|--------|---------|
-| `dcn-4node-modified.cc` | ✅ Working | Current thesis data |
-| `dcn-hybrid-routing.cc` | 🔄 WIP | Future work demo |
-| `dcn-4node-BACKUP.cc` | 📦 Backup | Emergency fallback |
+| `dcn-4node-modified.cc` | ✅ Complete | Baseline (24 MCS tests) |
+| `dcn-hybrid-routing-final.cc` | ✅ Complete | Hybrid routing (working!) |
+| `dcn-hybrid-routing.cc` | 📋 Placeholder | Early concept |
+| `dcn-4node-BACKUP.cc` | 📦 Backup | Safety copy |
+| `final_results.txt` | 📊 Data | Baseline results |
+| `hybrid-results.csv` | 📊 Data | Hybrid test results |
 
 ---
 
 ## References
 
 1. IEEE 802.11ad-2012
-2. Qualcomm. "Wireless augmented data center." YouTube, Feb 2025.
+2. Qualcomm. "Wireless augmented data center." YouTube, Feb 2025
 3. ns-3-users mailing list, Nov 2025
 
 ---
@@ -148,4 +171,5 @@ python3 parse_results.py
 
 ---
 
-*Last Updated: November 2025*
+*Last Updated: November 2025*  
+*Both baseline and hybrid simulations complete!*

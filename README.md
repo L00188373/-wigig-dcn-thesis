@@ -162,8 +162,8 @@ The WiGig module was last maintained for ns-3.40. Later releases (3.41+) refacto
 
 ### ns-3 Community Engagement
 
-**Expert**: Tommaso Pecorella (ns-3 core developer)  
-**Forum**: [ns-3-users mailing list](https://groups.google.com/g/ns-3-users)  
+**Expert**: ns-3 core developer)
+**Forum**: [ns-3-users mailing list]
 **Date**: November 2025  
 **Suggested by**: Thesis supervisor
 

@@ -81,5 +81,4 @@ After wireless augmentation:
   Result: 2.1× total capacity, ZERO packet loss, congestion eliminated
 
 ================================================================================
-Report generated successfully!
 ================================================================================

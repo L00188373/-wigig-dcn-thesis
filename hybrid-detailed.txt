@@ -1,0 +1,66 @@
+
+╔════════════════════════════════════════════════════════╗
+║   Hybrid DCN: Cat6 Ethernet + 60 GHz WiGig            ║
+╚════════════════════════════════════════════════════════╝
+
+Architecture: Dual-path with traffic classification
+  Wired path:   Cat6 Ethernet @ 1Gbps
+  Wireless path: 60 GHz WiGig @ MCS 12
+  Distance:     1 meters
+
+Traffic Classification:
+  Mice flows (≤1KB):    Wired path (low latency)
+  Elephant flows (>1KB): Wireless path (high throughput)
+
+Traffic Classification:
+  Mice flows (≤1KB):    Wired path (low latency)
+  Elephant flows (>1KB): Wireless path (high throughput)
+
+
+IP Address Assignment:
+  Server A (Wired):    10.1.1.1
+  Server B (Wired):    10.1.1.2
+  Server A (Wireless): 10.1.2.1
+  Server B (Wireless): 10.1.2.2
+
+Setting up traffic flows...
+  Mice flow:     10.1.1.1 -> 10.1.1.2 (wired, 512B @ 100 Mbps)
+  Elephant flow: 10.1.2.1 -> 10.1.2.2 (wireless, 65000B @ 2000 Mbps)
+
+  Elephant flow: 10.1.2.1 -> 10.1.2.2 (wireless, 65000B @ 2000 Mbps)
+
+Running simulation... DONE
+
+============================================================
+           HYBRID ROUTING SIMULATION RESULTS
+============================================================
+
+Simulation Parameters:
+  Duration:      10 seconds
+  Distance:      1 meters
+  Wireless MCS:  12
+
+WIRED PATH (Cat6 Ethernet) - Mice Flows (512B packets):
+  Target Rate:   100 Mbps
+  Throughput:    100.00 Mbps
+  Packets TX:    239257
+  Packets RX:    239257
+  Packet Loss:   0.00 %
+  Avg Latency:   0.000 ms
+
+WIRELESS PATH (60 GHz WiGig) - Elephant Flows (65000B packets):
+  Target Rate:   2000.000 Mbps
+  Throughput:    1999.98 Mbps
+  Packets TX:    37692
+  Packets RX:    37692
+  Packet Loss:   0.00 %
+  Avg Latency:   0.000 ms
+
+HYBRID PERFORMANCE:
+  Total Throughput:      2099.98 Mbps
+  Wired Contribution:    4.8 %
+  Wireless Contribution: 95.2 %
+  Speedup vs Cat6 only:  2.10×
+
+Results saved to: hybrid-results.csv
+

@@ -1,4 +1,0 @@
-Path,PacketSize,TargetRate,Throughput,PacketLoss,Latency,TxPackets,RxPackets
-Wired,512,100,99.9997,0,0,239257,239257
-Wireless,65000,2000,1999.98,0,0,37692,37692
-Total,N/A,N/A,2099.98,N/A,N/A,N/A,N/A

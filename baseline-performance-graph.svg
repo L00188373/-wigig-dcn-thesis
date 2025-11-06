@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700">
+  <!-- Title -->
+  <text x="600" y="30" font-size="24" font-weight="bold" text-anchor="middle" fill="#2c3e50">
+    Baseline: 60 GHz WiGig Performance Across All MCS Levels
+  </text>
+  <text x="600" y="55" font-size="14" text-anchor="middle" fill="#7f8c8d">
+    IEEE 802.11ad at 1-2m Distance (ns-3.40 Simulation)
+  </text>
+  
+  <!-- Y-axis label -->
+  <text x="30" y="350" font-size="16" text-anchor="middle" transform="rotate(-90 30 350)" fill="#2c3e50">
+    Throughput (Mbps)
+  </text>
+  
+  <!-- X-axis label -->
+  <text x="600" y="680" font-size="16" text-anchor="middle" fill="#2c3e50">
+    MCS Index
+  </text>
+  
+  <!-- Grid lines -->
+  <line x1="100" y1="600" x2="1100" y2="600" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="100" y1="500" x2="1100" y2="500" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="100" y1="400" x2="1100" y2="400" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="100" y1="300" x2="1100" y2="300" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="100" y1="200" x2="1100" y2="200" stroke="#ecf0f1" stroke-width="1"/>
+  <line x1="100" y1="100" x2="1100" y2="100" stroke="#ecf0f1" stroke-width="1"/>
+  
+  <!-- Y-axis -->
+  <line x1="100" y1="80" x2="100" y2="600" stroke="#2c3e50" stroke-width="2"/>
+  <!-- X-axis -->
+  <line x1="100" y1="600" x2="1100" y2="600" stroke="#2c3e50" stroke-width="2"/>
+  
+  <!-- Y-axis labels -->
+  <text x="90" y="605" text-anchor="end" font-size="12" fill="#2c3e50">0</text>
+  <text x="90" y="505" text-anchor="end" font-size="12" fill="#2c3e50">500</text>
+  <text x="90" y="405" text-anchor="end" font-size="12" fill="#2c3e50">1000</text>
+  <text x="90" y="305" text-anchor="end" font-size="12" fill="#2c3e50">1500</text>
+  <text x="90" y="205" text-anchor="end" font-size="12" fill="#2c3e50">2000</text>
+  <text x="90" y="105" text-anchor="end" font-size="12" fill="#2c3e50">2500</text>
+  
+  <!-- Cat6 baseline reference line -->
+  <line x1="100" y1="400" x2="1100" y2="400" stroke="#e74c3c" stroke-width="2" stroke-dasharray="5,5" opacity="0.6"/>
+  <text x="1110" y="405" font-size="12" fill="#e74c3c" font-weight="bold">Cat6 (1 Gbps)</text>
+  
+  <!-- Data points (MCS 1-24, approximate values) -->
+  <!-- MCS 1-4: BPSK (166-504 Mbps) -->
+  <circle cx="142" cy="567" r="5" fill="#3498db"/>
+  <circle cx="183" cy="540" r="5" fill="#3498db"/>
+  <circle cx="225" cy="510" r="5" fill="#3498db"/>
+  <circle cx="267" cy="495" r="5" fill="#3498db"/>
+  
+  <!-- MCS 5-8: QPSK (546-988 Mbps) -->
+  <circle cx="308" cy="491" r="5" fill="#9b59b6"/>
+  <circle cx="350" cy="459" r="5" fill="#9b59b6"/>
+  <circle cx="392" cy="435" r="5" fill="#9b59b6"/>
+  <circle cx="433" cy="402" r="5" fill="#9b59b6"/>
+  
+  <!-- MCS 9-12: 16QAM (1051-1877 Mbps) - OPTIMAL ZONE -->
+  <circle cx="475" cy="390" r="7" fill="#27ae60" stroke="#f39c12" stroke-width="2"/>
+  <circle cx="517" cy="343" r="7" fill="#27ae60" stroke="#f39c12" stroke-width="2"/>
+  <circle cx="558" cy="305" r="7" fill="#27ae60" stroke="#f39c12" stroke-width="2"/>
+  <circle cx="600" cy="224" r="8" fill="#27ae60" stroke="#f39c12" stroke-width="3"/>
+  
+  <!-- MCS 12 highlight -->
+  <text x="600" y="210" text-anchor="middle" font-size="11" font-weight="bold" fill="#27ae60">MCS 12</text>
+  <text x="600" y="195" text-anchor="middle" font-size="10" fill="#27ae60">1,877 Mbps</text>
+  <text x="600" y="180" text-anchor="middle" font-size="9" fill="#f39c12">⭐ OPTIMAL</text>
+  
+  <!-- MCS 17-24: 64QAM (902-2666 Mbps) -->
+  <circle cx="642" cy="402" r="5" fill="#e67e22"/>
+  <circle cx="683" cy="380" r="5" fill="#e67e22"/>
+  <circle cx="725" cy="345" r="5" fill="#e67e22"/>
+  <circle cx="767" cy="310" r="5" fill="#e67e22"/>
+  <circle cx="808" cy="275" r="5" fill="#e67e22"/>
+  <circle cx="850" cy="240" r="5" fill="#e67e22"/>
+  <circle cx="892" cy="205" r="5" fill="#e67e22"/>
+  <circle cx="933" cy="133" r="6" fill="#e67e22"/>
+  
+  <!-- MCS 24 label -->
+  <text x="933" y="120" text-anchor="middle" font-size="10" fill="#e67e22">MCS 24: 2,666 Mbps</text>
+  
+  <!-- Connect the dots with line -->
+  <polyline points="142,567 183,540 225,510 267,495 308,491 350,459 392,435 433,402 475,390 517,343 558,305 600,224 642,402 683,380 725,345 767,310 808,275 850,240 892,205 933,133" 
+            fill="none" stroke="#3498db" stroke-width="2" opacity="0.5"/>
+  
+  <!-- X-axis MCS labels -->
+  <text x="142" y="620" text-anchor="middle" font-size="10" fill="#555">1</text>
+  <text x="267" y="620" text-anchor="middle" font-size="10" fill="#555">4</text>
+  <text x="433" y="620" text-anchor="middle" font-size="10" fill="#555">8</text>
+  <text x="600" y="620" text-anchor="middle" font-size="10" fill="#555" font-weight="bold">12</text>
+  <text x="767" y="620" text-anchor="middle" font-size="10" fill="#555">20</text>
+  <text x="933" y="620" text-anchor="middle" font-size="10" fill="#555">24</text>
+  
+  <!-- Legend -->
+  <rect x="850" y="450" width="230" height="120" fill="white" stroke="#bdc3c7" stroke-width="1" rx="5"/>
+  <text x="965" y="475" text-anchor="middle" font-size="14" font-weight="bold" fill="#2c3e50">Modulation Schemes</text>
+  
+  <circle cx="870" cy="495" r="4" fill="#3498db"/>
+  <text x="885" y="499" font-size="11" fill="#2c3e50">MCS 1-4: BPSK</text>
+  
+  <circle cx="870" cy="515" r="4" fill="#9b59b6"/>
+  <text x="885" y="519" font-size="11" fill="#2c3e50">MCS 5-8: QPSK</text>
+  
+  <circle cx="870" cy="535" r="4" fill="#27ae60"/>
+  <text x="885" y="539" font-size="11" fill="#2c3e50">MCS 9-12: 16QAM ⭐</text>
+  
+  <circle cx="870" cy="555" r="4" fill="#e67e22"/>
+  <text x="885" y="559" font-size="11" fill="#2c3e50">MCS 17-24: 64QAM</text>
+  
+  <!-- Key findings box -->
+  <rect x="120" y="90" width="300" height="60" fill="#ecf0f1" stroke="#95a5a6" stroke-width="1" rx="5"/>
+  <text x="270" y="110" text-anchor="middle" font-size="12" font-weight="bold" fill="#2c3e50">Key Finding</text>
+  <text x="270" y="130" text-anchor="middle" font-size="11" fill="#27ae60">MCS 12: 1,877 Mbps</text>
+  <text x="270" y="145" text-anchor="middle" font-size="10" fill="#7f8c8d">1.88× faster than Cat6 Ethernet</text>
+</svg>

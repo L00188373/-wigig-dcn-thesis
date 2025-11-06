@@ -145,7 +145,6 @@ def generate_report(baseline_data, hybrid_data):
     report.append("  Result: 2.1× total capacity, ZERO packet loss, congestion eliminated")
     
     report.append("\n" + "="*80)
-    report.append("Report generated successfully!")
     report.append("="*80 + "\n")
     
     return "\n".join(report)

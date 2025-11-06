@@ -7,13 +7,11 @@
 ---
 
 ## Project Overview
-This repository contains simulation code for investigating 60 GHz wireless links as supplementary interconnects in data-center networks. This study examines whether augmenting traditional wired infrastructure (Cat6/fiber) with 60 GHz WiGig can alleviate network congestion through intelligent traffic classification.
+This repository contains simulation code for investigating 60 GHz wireless links as supplementary interconnects in data-center networks. This study examines whether augmenting traditional wired infrastructure (Cat6/fiber) with 60 GHz WiGig can alleviate network congestion through intelligent traffic management. 
 
-Important Note: This repository contains the exploratory simulation code developed during the research phase. The simulations demonstrate the proof-of-concept for hybrid wired-wireless architectures using ns-3.40. The results presented are preliminary and reflect idealized conditions (free-space line-of-sight, no metallic multipath). The final validated results, comprehensive analysis, and deployment recommendations will be documented in the complete thesis submission. This study represents ongoing research on congestion relief mechanisms for oversubscribed data center networks.
+**Important Note:** This repository contains the exploratory simulation code developed during the research phase. The simulations demonstrate the proof-of-concept for hybrid wired-wireless architectures using ns-3.40. The results presented are preliminary and reflect idealized conditions (free-space line-of-sight, no metallic multipath). The final validated results, comprehensive analysis, and deployment recommendations will be documented in the complete thesis submission. This study represents ongoing research on congestion relief mechanisms for oversubscribed data center networks.
 
-**Important Note:** This repository contains exploratory simulation code developed during the research phase. The simulations demonstrate proof-of-concept for hybrid wired-wireless architectures using ns-3.40. Results presented are preliminary and reflect idealized conditions (free-space line-of-sight, no metallic multipath). Final validated results, comprehensive analysis, and deployment recommendations will be documented in the complete thesis submission. This work represents ongoing research into congestion relief mechanisms for oversubscribed data center networks.
 
----
 
 ## Simulation Files
 

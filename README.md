@@ -38,7 +38,9 @@ cd ~/ns-allinone-3.40/ns-3.40
 
 **Run:**
 ```bash
+cd ~/ns-allinone-3.40/ns-3.40/
 ./ns3 run scratch/dcn-hybrid-routing-final
+
 ```
 **Runtime:** ~10 seconds
 

@@ -1,6 +1,6 @@
 /*
  * WiGig Link Redundancy with Failover Simulation
- * Simple 2-node test showing link blocking and recovery
+ * Updated with configurable beamwidth support
  */
 
 #include "wigig-examples-common-functions.h"
@@ -20,6 +20,7 @@ using namespace std;
 NS_LOG_COMPONENT_DEFINE("DcnRedundancyFailover");
 
 Ptr<WigigPhy> phyA, phyB;
+uint32_t g_sectors = 8;
 
 void SetAntennaConfigurations(NetDeviceContainer& dev1, NetDeviceContainer& dev2)
 {
@@ -28,8 +29,14 @@ void SetAntennaConfigurations(NetDeviceContainer& dev1, NetDeviceContainer& dev2
     Ptr<AdhocWigigMac> mac1 = DynamicCast<AdhocWigigMac>(device1->GetMac());
     Ptr<AdhocWigigMac> mac2 = DynamicCast<AdhocWigigMac>(device2->GetMac());
     
-    mac1->AddAntennaConfig(1, 1, mac2->GetAddress());
-    mac2->AddAntennaConfig(5, 1, mac1->GetAddress());
+    // Select sectors on opposite sides (180° apart)
+    uint32_t sector1 = 1;
+    uint32_t sector2 = 1 + (g_sectors / 2);  // Opposite side of array
+    
+    std::cout << "Antenna Config: Node1=Sector" << sector1 
+              << ", Node2=Sector" << sector2 << std::endl;    
+    mac1->AddAntennaConfig(sector1, 1, mac2->GetAddress());
+    mac2->AddAntennaConfig(sector2, 1, mac1->GetAddress());
     mac1->SteerAntennaToward(mac2->GetAddress());
     mac2->SteerAntennaToward(mac1->GetAddress());
 }
@@ -66,13 +73,25 @@ int main(int argc, char *argv[])
     double obstructionStart = 5.0;
     double obstructionEnd = 10.0;
     double distance = 1.82;
+    uint32_t sectors = 8;
     
     string wigigErrorModel = "src/wigig/model/reference/ErrorModel/LookupTable_1458.txt";
 
     CommandLine cmd;
     cmd.AddValue("mcs", "WiGig MCS (1-24)", mcs);
     cmd.AddValue("simulationTime", "Simulation time", simulationTime);
+    cmd.AddValue("distance", "Distance between nodes (meters)", distance);
+    cmd.AddValue("sectors", "Number of antenna sectors", sectors);
     cmd.Parse(argc, argv);
+
+    if (sectors < 8)
+    {
+        std::cerr << "Error: Minimum 8 sectors required. Use 8, 16, or 32." << std::endl;
+        return 1;
+    }
+
+    g_sectors = sectors;
+    double beamwidth = 360.0 / sectors;
 
     ValidateFrameAggregationAttributes(msduAggSize, mpduAggSize);
     ConfigureRtsCtsAndFragmenatation(enableRts, rtsThreshold);
@@ -82,24 +101,23 @@ int main(int argc, char *argv[])
     std::cout << "  WiGig Redundancy Test" << std::endl;
     std::cout << "======================================\n" << std::endl;
     std::cout << "MCS: " << mcs << std::endl;
-    std::cout << "Distance: " << distance << "m\n" << std::endl;
+    std::cout << "Distance: " << distance << "m" << std::endl;
+    std::cout << "Sectors: " << sectors << " (Beamwidth: " << std::fixed 
+              << std::setprecision(2) << beamwidth << "°)\n" << std::endl;
     std::cout << "Timeline:" << std::endl;
     std::cout << "  0-" << obstructionStart << "s:   Normal" << std::endl;
     std::cout << "  " << obstructionStart << "-" << obstructionEnd << "s:  Blocked" << std::endl;
     std::cout << "  " << obstructionEnd << "-" << simulationTime << "s: Restored\n" << std::endl;
 
-    // Get PHY rate
     string wigigModePrefix = "DmgMcs";
     WifiMode mode = WifiMode(wigigModePrefix + to_string(mcs));
     uint64_t dataRate = mode.GetPhyRate(2160);
 
-    // Create nodes
     NodeContainer nodes;
     nodes.Create(2);
     Ptr<Node> node1 = nodes.Get(0);
     Ptr<Node> node2 = nodes.Get(1);
 
-    // WiGig setup
     WigigHelper wigig;
     
     WigigChannelHelper wigigChannel;
@@ -122,24 +140,20 @@ int main(int argc, char *argv[])
     wigig.SetCodebook("ns3::CodebookAnalytical",
                       "CodebookType", EnumValue(SIMPLE_CODEBOOK),
                       "Antennas", UintegerValue(1),
-                      "Sectors", UintegerValue(8));
+                      "Sectors", UintegerValue(sectors));
     
     wigigMac.SetType("ns3::AdhocWigigMac",
                      "BE_MaxAmpduSize", StringValue(mpduAggSize),
                      "BE_MaxAmsduSize", StringValue(msduAggSize));
 
-    // Install devices separately
     NetDeviceContainer device1 = wigig.Install(wigigPhy, wigigMac, node1);
     NetDeviceContainer device2 = wigig.Install(wigigPhy, wigigMac, node2);
 
-    // Store PHY pointers
     phyA = DynamicCast<WigigNetDevice>(device1.Get(0))->GetPhy();
     phyB = DynamicCast<WigigNetDevice>(device2.Get(0))->GetPhy();
 
-    // Configure antennas
     Simulator::ScheduleNow(&SetAntennaConfigurations, device1, device2);
 
-    // Mobility
     MobilityHelper mobility;
     Ptr<ListPositionAllocator> positionAlloc = CreateObject<ListPositionAllocator>();
     positionAlloc->Add(Vector(0.0, 0.0, 0.0));
@@ -148,7 +162,6 @@ int main(int argc, char *argv[])
     mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
     mobility.Install(nodes);
 
-    // Internet stack
     InternetStackHelper internet;
     internet.Install(nodes);
 
@@ -163,7 +176,6 @@ int main(int argc, char *argv[])
     Ipv4GlobalRoutingHelper::PopulateRoutingTables();
     PopulateArpCache();
 
-    // Applications
     uint16_t port = 9999;
     
     PacketSinkHelper sink("ns3::UdpSocketFactory",
@@ -182,11 +194,9 @@ int main(int argc, char *argv[])
     sourceApp.Start(Seconds(0.0));
     sourceApp.Stop(Seconds(simulationTime));
 
-    // Schedule events
     Simulator::Schedule(Seconds(obstructionStart), &BlockLink);
     Simulator::Schedule(Seconds(obstructionEnd), &UnblockLink);
 
-    // Flow monitor
     FlowMonitorHelper flowmon;
     Ptr<FlowMonitor> monitor = flowmon.InstallAll();
 
@@ -194,7 +204,6 @@ int main(int argc, char *argv[])
     Simulator::Stop(Seconds(simulationTime));
     Simulator::Run();
 
-    // Results
     std::cout << "\n======================================" << std::endl;
     std::cout << "           RESULTS" << std::endl;
     std::cout << "======================================\n" << std::endl;

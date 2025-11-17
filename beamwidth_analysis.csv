@@ -1,0 +1,4 @@
+Sectors,Beamwidth_Degrees,Throughput_Mbps,PacketLoss_%
+8,45.0,2643.31,57.88
+16,22.5,2643.31,57.88
+32,11.25,2643.31,57.88

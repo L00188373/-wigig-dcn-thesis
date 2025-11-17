@@ -1,0 +1,34 @@
+
+======================================
+  WiGig Redundancy Test
+======================================
+
+MCS: 12
+Distance: 1.82m
+
+Timeline:
+  0-5s:   Normal
+  5-10s:  Blocked
+  10-15s: Restored
+
+Node 1: 10.0.0.1
+Node 2: 10.0.0.2
+
+Starting simulation...
+
+
+[5s] OBSTRUCTION: Link blocked!
+[10s] RECOVERY: Link restored!
+
+======================================
+           RESULTS
+======================================
+
+Flow: 10.0.0.2 -> 10.0.0.1
+  Throughput: 2643.31 Mbps
+  TX: 7845188
+  RX: 3304134
+  Loss: 57.88 %
+
+======================================
+

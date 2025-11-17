@@ -1,0 +1,6 @@
+Technology,Details,Throughput_Mbps,PacketLoss_%
+Cat6 Ethernet,1 Gbps,998.67,2.0
+Cat6a Ethernet,10 Gbps,9983.36,2.0
+WiGig,MCS 1,248.53,84.16
+WiGig,MCS 12,2643.31,57.88
+WiGig,MCS 24,3664.97,56.75

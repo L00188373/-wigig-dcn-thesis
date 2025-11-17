@@ -1,28 +1,28 @@
-# Build files
+# NS-3 build files
 *.o
 *.so
-*.pyc
+*.a
+build/
+cmake-cache/
+
+# Python
 __pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
 
 # Editor files
-*~
 *.swp
-.DS_Store
+*.swo
+*~
 .vscode/
 .idea/
 
-# Temporary files
-*.log
-*.tmp
+# OS files
+.DS_Store
+Thumbs.db
 
-# Large directories (don't upload entire ns-3)
-ns-allinone-3.40/
-build/
-
-# Keep only our specific files
-!dcn-4node-modified.cc
-!dcn-4node-BACKUP.cc
-!final_results.txt
-!mcs_data.csv
-!parse_results.py
-!README.md
+# Backup files
+*.backup
+*.bak
+*.old

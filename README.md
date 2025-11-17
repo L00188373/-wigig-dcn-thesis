@@ -4,7 +4,7 @@
 **Institution:** ATU - Atlantic Technological University  
 **Program:** MSc in Data Analytics  
 **Supervisor:** Dr. Saim Ghafoor  
-**Status:** In Progress (60% Complete)
+**Status:** In Progress (80% Complete)
 
 ---
 

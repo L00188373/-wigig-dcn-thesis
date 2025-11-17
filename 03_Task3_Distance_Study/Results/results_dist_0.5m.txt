@@ -1,0 +1,20 @@
+
+======================================
+  WiGig Redundancy Test
+======================================
+
+MCS: 12
+Distance: 0.5m
+Sectors: 8 (Beamwidth: 45.00°)
+
+Timeline:
+  0-5.00s:   Normal
+  5.00-10.00s:  Blocked
+  10.00-15.00s: Restored
+
+Node 1: 10.0.0.1
+Node 2: 10.0.0.2
+
+Starting simulation...
+
+Antenna Config: Node1=Sector1, Node2=Sector5

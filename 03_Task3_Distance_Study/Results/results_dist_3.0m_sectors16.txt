@@ -1,0 +1,36 @@
+
+======================================
+  WiGig Redundancy Test
+======================================
+
+MCS: 12
+Distance: 3m
+Sectors: 16 (Beamwidth: 22.50°)
+
+Timeline:
+  0-5.00s:   Normal
+  5.00-10.00s:  Blocked
+  10.00-15.00s: Restored
+
+Node 1: 10.0.0.1
+Node 2: 10.0.0.2
+
+Starting simulation...
+
+Antenna Config: Node1=Sector1, Node2=Sector9
+
+[5.00s] OBSTRUCTION: Link blocked!
+[10.00s] RECOVERY: Link restored!
+
+======================================
+           RESULTS
+======================================
+
+Flow: 10.0.0.2 -> 10.0.0.1
+  Throughput: 2643.17 Mbps
+  TX: 7845188
+  RX: 3303963
+  Loss: 57.89 %
+
+======================================
+

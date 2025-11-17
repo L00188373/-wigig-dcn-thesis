@@ -4,7 +4,7 @@
 **Institution:** ATU - Atlantic Technological University  
 **Program:** MSc in Data Analytics  
 **Supervisor:** Dr. Saim Ghafoor  
-**Status:** In Progress (40% Complete)
+**Status:** In Progress (60% Complete)
 
 ---
 
@@ -95,7 +95,7 @@ Parameters:
 | **4** | **Hybrid Architecture** | 📋 Planned | 0% |
 | **5** | **Blockage & Failover** | ✅ Complete | 100% |
 
-**Overall Progress:** 40% (2 of 5 scenarios complete)
+**Overall Progress:** 40% (3 of 5 scenarios complete)
 
 ---
 

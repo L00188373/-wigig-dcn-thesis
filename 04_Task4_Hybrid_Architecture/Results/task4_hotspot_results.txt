@@ -1,0 +1,24 @@
+ninja: no work to do.
+Starting Task 4: Hybrid Architecture Analysis
+===========================================
+Configuration:
+  Servers per rack: 20
+  ToR switches: 4
+  Spine switches: 2
+  Traffic pattern: hotspot
+Creating nodes...
+Installing Internet stack...
+Creating network links...
+  ToR 0 -> Spine 0 (Wired only)
+  ToR 0 -> Spine 1 (Wired only)
+  ToR 1 -> Spine 0 (Wired only)
+  ToR 1 -> Spine 1 (Wired only)
+  ToR 2 -> Spine 0 (Hybrid - wired primary)
+  ToR 2 -> Spine 1 (Hybrid - wired primary)
+  ToR 3 -> Spine 0 (Hybrid - wired primary)
+  ToR 3 -> Spine 1 (Hybrid - wired primary)
+Configuring global routing...
+Generating HOTSPOT traffic pattern
+80% of traffic going to ToR 2 (hybrid)
+Running simulation for 30 seconds...
+Process was interrupted by the user

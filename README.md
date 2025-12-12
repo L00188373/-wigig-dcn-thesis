@@ -1,3 +1,4 @@
+
 # 60 GHz WiGig–Augmented Data Center Networks  
 ## Simulation-Based MSc Thesis Research
 
@@ -82,23 +83,10 @@ Wireless neighborways act as *express lanes* that offload hotspot traffic, impro
 ---
 
 ## ⚠️ Protocol-Level Insight: TCP Packet Reordering
-During hybrid operation, some packet loss persists even when congestion is reduced. This is caused by **TCP packet reordering**:
-
-- Wired path: shorter (3 hops)
-- Wireless neighborway: longer (4 hops)
-
-Packets arrive out of order, and standard TCP misinterprets this as congestion, triggering unnecessary retransmissions and window reduction.
+During hybrid operation, some packet loss persists even when congestion is reduced. This is caused by **TCP packet reordering** due to differing wired and wireless path delays.
 
 **Implication:**  
 Reordering-tolerant mechanisms (e.g., TCP SACK, DCTCP with reordering control, or flow pinning) could further enhance hybrid performance.
-
----
-
-## 🏗️ Simulated Architecture Overview
-- **Topology:** 4 racks, 80 servers, ToR–Spine DCN
-- **Hotspot:** One rack receives 80% of traffic
-- **Wireless augmentation:** Short-range 60 GHz neighborways between adjacent ToRs
-- **Traffic model:** Realistic mice (95% of flows) and elephant (5% of flows) distribution
 
 ---
 
@@ -111,41 +99,10 @@ Reordering-tolerant mechanisms (e.g., TCP SACK, DCTCP with reordering control, o
 
 ---
 
-## 📁 Repository Structure
-├── 00_Documentation/ # Thesis-ready methodology and reports
-├── 01_Simulation_Code/ # ns-3 simulation programs
-├── 02_Task1_Beamwidth_Analysis/ # Beamwidth experiments
-├── 02_Task2_Complete_MCS_Analysis # MCS 1–24 evaluation
-├── 03_Task3_Distance_Study # Distance feasibility analysis
-├── 04_Task4_Hybrid_Architecture # Hybrid DCN simulations & results
-├── 03_Task5_Blockage_Failover # Blockage and recovery analysis
-├── 05_Helper_Scripts # Automation utilities
-└── 99_Archive # Deprecated / historical code
-
----
-
-## 📈 Research Contributions
-1. Demonstrated beamwidth independence for 60 GHz links in DCNs  
-2. Identified optimal MCS selection for short-range neighborways  
-3. Validated WiGig feasibility across realistic rack distances  
-4. Quantified hotspot mitigation benefits for mice and elephant flows  
-5. Identified TCP reordering as a key challenge in hybrid DCNs  
-
----
-
 ## 🔮 Future Work
 A natural extension of this work is a **multi-band hybrid design**, where:
 - **60 GHz WiGig** provides high-throughput primary paths
 - **6 GHz Wi-Fi 6E** serves as a lower-rate but more resilient backup
-
-This would directly address mmWave reliability concerns while preserving the performance gains demonstrated in this thesis.
-
----
-
-## 📚 Key References
-- Shan et al., *Relieving Hotspots in Data Center Networks with Wireless Neighborways*, IEEE Globecom  
-- Sur et al., *WiFi-Assisted 60 GHz Wireless Networks*, IEEE  
-- Hamza et al., *Wireless Communication in Data Centers: A Survey*, IEEE Communications Surveys  
 
 ---
 

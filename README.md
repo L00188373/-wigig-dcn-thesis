@@ -1,4 +1,3 @@
-
 # 60 GHz WiGig–Augmented Data Center Networks  
 ## Simulation-Based MSc Thesis Research
 
@@ -6,7 +5,7 @@
 **Institution:** Atlantic Technological University (ATU)  
 **Programme:** MSc in Data Analytics  
 **Supervisor:** Dr. Saim Ghafoor  
-**Status:** ✅ **Complete – Final Thesis Submission**
+**Status:** ✅ **Complete – Final Thesis Submission + Extended Challenges**
 
 ---
 
@@ -24,7 +23,7 @@ This research investigates the feasibility and performance impact of augmenting 
 
 ---
 
-## 📊 Key Findings
+## 📊 Key Findings (Original Thesis Tasks)
 
 ### ✅ Task 1: Beamwidth Analysis
 **Finding:** Antenna beamwidth (45°, 22.5°, 11.25°) has **no measurable impact on throughput** at typical rack distances (~2 m).  
@@ -82,6 +81,47 @@ Wireless neighborways act as *express lanes* that offload hotspot traffic, impro
 
 ---
 
+## 🚀 Extended Challenges (December 2024 - January 2025)
+
+Following supervisor requirements to address practical deployment challenges, each investigating three key questions: problem identification, NS-3 demonstration, and solution validation.
+
+### ✅ Challenge 1: Blockage Sensitivity with Redundant Links
+**Problem:** 60 GHz links fail completely when signal drops below -50 dBm (20-30 dB attenuation from obstruction)
+
+**NS-3 Implementation:** 
+- Error model with 100% packet loss during 10-15s blockage window
+- Simulated realistic signal degradation using `blockage-severe.cc`
+- Three scenarios tested: baseline, blockage without redundancy, blockage with redundancy
+
+**Solution:** Redundant ToR1↔ToR3 link (2.5 Gbps) creating mesh topology
+
+**Results:**
+| Scenario | Throughput | Packet Loss | Improvement |
+|----------|------------|-------------|-------------|
+| Baseline (no blockage) | 13.2 Mbps | 0 | - |
+| Blockage without redundancy | 9.9 Mbps | 198 packets | -25% |
+| Blockage with redundancy | 25.3 Mbps | 0 | **+156%** |
+
+**Key Finding:** Redundancy provides **156% throughput improvement** through multi-path capacity aggregation, not just failover.
+
+[📊 View Graph](05_Extended_Challenges/Challenge1_Blockage/Challenge1_Final_Results.png) | [💻 View Code](05_Extended_Challenges/Challenge1_Blockage/blockage-severe.cc)
+
+---
+
+### ✅ Challenge 2: Beamforming and Alignment
+**Status:** Complete - Results demonstrate beamwidth independence at 2m distance (see Task 1)
+
+### 🔄 Challenge 3: Interference Management
+**Status:** In Progress
+
+### 📅 Challenge 4: Energy Efficiency
+**Status:** Planned
+
+### 📅 Challenge 5: Dynamic MCS Adaptation
+**Status:** Planned
+
+---
+
 ## ⚠️ Protocol-Level Insight: TCP Packet Reordering
 During hybrid operation, some packet loss persists even when congestion is reduced. This is caused by **TCP packet reordering** due to differing wired and wireless path delays.
 
@@ -99,13 +139,30 @@ Reordering-tolerant mechanisms (e.g., TCP SACK, DCTCP with reordering control, o
 
 ---
 
+## 📁 Repository Structure
+```
+├── 00_Documentation/           # Methodology and presentations
+├── 01_Simulation_Code/         # Base NS-3 simulations
+├── 02_Task1_Beamwidth_Analysis/
+├── 02_Task2_Complete_MCS_Analysis/
+├── 03_Task3_Distance_Study/
+├── 03_Task5_Blockage_Failover/
+├── 04_Task4_Hybrid_Architecture/
+├── 05_Extended_Challenges/     # NEW: Practical deployment challenges
+│   └── Challenge1_Blockage/    # 156% improvement with redundancy
+└── 05_Helper_Scripts/
+```
+
+---
+
 ## 🔮 Future Work
-A natural extension of this work is a **multi-band hybrid design**, where:
-- **60 GHz WiGig** provides high-throughput primary paths
-- **6 GHz Wi-Fi 6E** serves as a lower-rate but more resilient backup
+- **Multi-band hybrid design:** 60 GHz WiGig primary + 6 GHz Wi-Fi 6E backup
+- **ML-based predictive failover** for blockage anticipation
+- **Hardware testbed validation** of simulation results
 
 ---
 
 ## 📧 Contact
 **Student:** L00188373  
-**Repository:** https://github.com/L00188373/-wigig-dcn-thesis
+**Repository:** https://github.com/L00188373/-wigig-dcn-thesis  
+**Thesis Submission:** January 2025

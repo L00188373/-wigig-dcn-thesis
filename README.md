@@ -1,172 +1,152 @@
-60 GHz WiGig–Augmented Data Center Networks
-Simulation-Based Evaluation of Hybrid Wired–Wireless Architectures
+# 60 GHz WiGig–Augmented Data Center Networks  
+## Simulation-Based Evaluation of Hybrid Wired–Wireless Architectures
 
-Student: L00188373
-Institution: Atlantic Technological University (ATU)
-Programme: MSc in Data Analytics
-Supervisor: Dr. Saim Ghafoor
-Status: ✅ Complete – Thesis Submitted
+**Student:** L00188373  
+**Institution:** Atlantic Technological University (ATU)  
+**Programme:** MSc in Data Analytics  
+**Supervisor:** Dr. Saim Ghafoor  
+**Status:** ✅ Thesis Submitted  
 
-Abstract
+---
 
-Modern data center networks (DCNs) experience frequent congestion hotspots due to highly skewed traffic patterns and the dominance of short-lived “mice” flows alongside large “elephant” transfers. Traditional wired spine–leaf architectures provide redundancy but cannot dynamically redistribute traffic without significant overprovisioning.
+## 📘 Overview
 
-This research investigates whether short-range 60 GHz WiGig (IEEE 802.11ad) wireless links can augment wired DCNs through neighborway connections between adjacent Top-of-Rack (ToR) switches. Using ns-3 simulation, the study evaluates feasibility, performance gains, congestion mitigation, and protocol-level implications of hybrid wired–wireless architectures.
+Modern data center networks (DCNs) suffer from congestion hotspots caused by highly skewed traffic patterns and the coexistence of short-lived *mice* flows with large *elephant* transfers. While spine–leaf architectures provide redundancy, they cannot dynamically redistribute traffic without significant overprovisioning.
 
-Research Objectives
+This project investigates whether **short-range 60 GHz WiGig (IEEE 802.11ad)** wireless links can **augment wired DCNs** using *neighborway* connections between adjacent Top-of-Rack (ToR) switches. Using **ns-3.40 simulations**, the work evaluates feasibility, performance gains, congestion mitigation, and protocol-level implications of **hybrid wired–wireless architectures**.
 
-This thesis addresses the following research questions:
+---
 
-Can 60 GHz WiGig links operate reliably at typical intra-rack and rack-to-rack distances?
+## 🎯 Research Objectives
 
-How do antenna beamwidth and modulation choices affect achievable throughput?
+This thesis addresses the following questions:
 
-Can wireless neighborways mitigate hotspot congestion in wired DCNs?
+- Can 60 GHz WiGig links operate reliably at typical intra-rack and rack-to-rack distances?
+- How do antenna beamwidth and modulation choices affect achievable throughput?
+- Can wireless neighborways mitigate hotspot congestion in wired DCNs?
+- How are mice and elephant flows affected in hybrid environments?
+- What protocol-level challenges arise when introducing parallel wireless paths?
 
-How are mice and elephant flows affected differently in hybrid environments?
+---
 
-What protocol-level challenges arise when introducing parallel wireless paths?
+## 🧪 Methodology
 
-Methodology
+All experiments were conducted using **ns-3.40** with IEEE 802.11ad (WiGig) models at 60 GHz.
 
-All experiments were conducted using ns-3.40 with IEEE 802.11ad (WiGig) models at 60 GHz. Simulations model:
+**Simulated topology:**
+- 4 ToR switches, 2 spine switches  
+- 20 servers per rack (80 total)  
+- 10 Gbps wired ToR–Spine links  
+- 2.5 Gbps wireless neighborways between adjacent ToRs  
 
-4-rack spine–leaf topology
+**Traffic workload:**
+- 5000 flows  
+- 95% mice (1–100 KB)  
+- 5% elephant (1–50 MB)  
 
-20 servers per rack (80 total)
+**Metrics:**
+- Throughput  
+- Packet loss  
+- Latency  
+- Congestion behavior  
+- Evaluated under both **uniform** and **hotspot** traffic patterns  
 
-10 Gbps wired ToR–Spine links
+---
 
-2.5 Gbps wireless neighborways between adjacent ToRs
+## 📊 Summary of Thesis Tasks
 
-Realistic workload:
+### ✅ Task 1: Beamwidth Analysis
+- Evaluated antenna sectors: **45°, 22.5°, 11.25°**
+- **Result:** No measurable throughput difference (~2.64 Gbps) at 2 m
+- **Conclusion:** Wide-beam, lower-cost antennas are sufficient for DCN neighborways
 
-95% mice flows (1–100 KB)
+### ✅ Task 2: MCS Evaluation
+- Tested multiple modulation and coding schemes
+- **Finding:** **MCS 12 (16-QAM)** provides the best trade-off:
+  - ~2.64 Gbps sustained throughput  
+  - Stable short-range performance  
+  - Better robustness than higher MCS levels  
 
-5% elephant flows (1–50 MB)
+### ✅ Task 3: Distance Study
+- Evaluated link stability across **1–10 m**
+- **Finding:** Stable performance across typical rack spacing; degradation only at extended distances
 
-Performance metrics include throughput, packet loss, latency, and congestion behaviour under both uniform and hotspot traffic conditions.
+### ✅ Task 4: Hybrid Wired–Wireless Architecture (Core Contribution)
 
-Summary of Thesis Tasks
-✅ Task 1: Beamwidth Analysis
+**Scenario:**  
+- 4-rack DCN with **80% hotspot traffic** targeting one rack
 
-Three antenna sector configurations were evaluated (45°, 22.5°, 11.25°).
+**Wired-only baseline:**
+- Severe ToR uplink congestion  
+- High packet loss  
+- Increased mice latency  
+- Throughput collapse under hotspot load  
 
-Result:
-No measurable throughput difference (~2.64 Gbps) at 2 m rack spacing.
+**Hybrid architecture:**
+- Two **2.5 Gbps WiGig neighborways** added between adjacent ToRs  
 
-Conclusion:
-Wide-beam, lower-cost antennas are sufficient for DCN neighborway deployment.
+**Hotspot Results:**
 
-✅ Task 2: Modulation and Coding Scheme (MCS) Evaluation
+| Metric           | Wired Only | Hybrid   | Improvement |
+|------------------|------------|----------|-------------|
+| Total Throughput | 8.25 Gbps  | 25.68 Gbps | +211%       |
+| Packet Drops     | 59,899     | 33,698   | −44%        |
+| Mice Latency     | 16.7 ms    | 11.7 ms  | −30%        |
 
-MCS levels were evaluated for throughput and reliability.
+**Key Insight:**  
+Wireless neighborways act as **dynamic congestion bypass paths**, improving both control-plane (mice) and bulk-transfer (elephant) performance.
 
-Finding:
-MCS 12 (16-QAM) provides optimal balance:
+### ✅ Task 5: Blockage and Failover Analysis
+- Simulated line-of-sight obstruction of 60 GHz links
+- **Findings:**
+  - Near-total packet loss during blockage  
+  - Automatic recovery in <100 ms after restoration  
+- **Conclusion:** Redundancy or multipath support is required for availability
 
-~2.64 Gbps sustained throughput
+---
 
-Stable performance at short range
+## 🚧 Extended Deployment Challenges
 
-Superior robustness compared to higher MCS levels
+### Challenge: Blockage with Redundant Wireless Links
 
-✅ Task 3: Distance Study
+A redundant ToR-to-ToR link was added to form a **wireless mesh**:
 
-Link stability evaluated across 1–10 m.
+| Scenario                     | Throughput | Packet Loss |
+|-----------------------------|------------|-------------|
+| Baseline                    | 13.2 Mbps  | 0           |
+| Blockage (no redundancy)    | 9.9 Mbps   | 198 packets |
+| Blockage (with redundancy)  | 25.3 Mbps  | 0           |
 
-Finding:
-WiGig links remain stable within typical data center rack spacing.
-Higher MCS levels degrade only at extended distances beyond standard layouts.
+**Observation:**  
+Redundancy enables both **failover** and **multi-path aggregation**, yielding performance gains beyond simple recovery.
 
-✅ Task 4: Hybrid Wired–Wireless Architecture (Core Contribution)
+---
 
-A 4-rack DCN topology was simulated with an 80% hotspot targeting a single rack.
+## 🔬 Protocol-Level Observations
 
-Wired-Only Baseline
+Hybrid operation introduces:
 
-Severe ToR uplink congestion
+- TCP packet reordering due to path delay asymmetry  
+- Residual packet drops unrelated to congestion  
 
-High packet loss
+This suggests the need for:
+- Reordering-aware congestion control  
+- Flow pinning  
+- DCTCP or transport-layer adaptations  
 
-Increased latency for mice flows
+---
 
-Throughput degradation under hotspot load
+## 🛠️ Technology Stack
 
-Hybrid Architecture with Wireless Neighborways
+- **Simulator:** ns-3.40  
+- **Wireless Standard:** IEEE 802.11ad (WiGig)  
+- **Frequency:** 60 GHz mmWave  
+- **Languages:** C++, Python  
+- **Analysis Tools:** Pandas, Matplotlib  
 
-Two 2.5 Gbps WiGig links were added between adjacent ToRs.
+---
 
-Hotspot Scenario Results:
-
-Metric	Wired Only	Hybrid	Improvement
-Total Throughput	8.25 Gbps	25.68 Gbps	+211%
-Total Packet Drops	59,899	33,698	−44%
-Mice Latency	16.7 ms	11.7 ms	−30%
-
-Key Insight:
-Wireless neighborways function as dynamic capacity augmentation paths, bypassing congested uplinks and improving both control-plane (mice) and bulk-transfer (elephant) performance.
-
-✅ Task 5: Blockage and Failover Analysis
-
-60 GHz links were evaluated under simulated obstruction.
-
-Finding:
-
-Blockage causes near-total packet loss during obstruction.
-
-Automatic recovery occurs within <100 ms after line-of-sight restoration.
-
-Conclusion:
-Hybrid architectures require redundancy or multi-path support to maintain availability.
-
-Extended Deployment Challenges
-
-To address real-world deployment constraints, additional challenges were evaluated.
-
-Challenge 1: Blockage with Redundant Wireless Links
-
-A redundant ToR-to-ToR link was introduced to create a wireless mesh.
-
-Scenario	Throughput	Packet Loss
-Baseline	13.2 Mbps	0
-Blockage (no redundancy)	9.9 Mbps	198 packets
-Blockage (with redundancy)	25.3 Mbps	0
-
-Observation:
-Redundancy enables both failover and multi-path aggregation, yielding significant performance gains beyond simple recovery.
-
-Protocol-Level Observations
-
-Introducing parallel wired and wireless paths results in:
-
-TCP packet reordering due to path delay asymmetry
-
-Residual packet drops unrelated to congestion
-
-Potential need for:
-
-Reordering-aware congestion control
-
-Flow pinning
-
-DCTCP enhancements
-
-This highlights the importance of transport-layer adaptation in hybrid DCNs.
-
-Technology Stack
-
-Simulator: ns-3.40
-
-Wireless Standard: IEEE 802.11ad (WiGig)
-
-Frequency: 60 GHz mmWave
-
-Languages: C++, Python
-
-Analysis Tools: Pandas, Matplotlib
-
-Repository Structure
+## 📁 Repository Structure
 ├── 00_Documentation/
 ├── 01_Simulation_Code/
 ├── 02_Task1_Beamwidth_Analysis/
@@ -174,37 +154,43 @@ Repository Structure
 ├── 03_Task3_Distance_Study/
 ├── 03_Task5_Blockage_Failover/
 ├── 04_Task4_Hybrid_Architecture/
-│   ├── Code/
-│   ├── Results/
-│   ├── Graphs/
-│   └── scripts/
+│ ├── Code/
+│ ├── Results/
+│ ├── Graphs/
+│ └── Scripts/
 ├── 05_Extended_Challenges/
 └── 05_Helper_Scripts/
-Contributions
 
-This thesis demonstrates that:
+---
 
-60 GHz WiGig is technically feasible for short-range DCN augmentation.
+## 🧠 Contributions
 
-Hybrid wired–wireless architectures significantly mitigate hotspot congestion.
+This work demonstrates that:
 
-Mice flows benefit disproportionately from reduced queue overflow.
+- 60 GHz WiGig is feasible for short-range DCN augmentation  
+- Hybrid wired–wireless architectures significantly mitigate hotspot congestion  
+- Mice flows benefit disproportionately from reduced queue overflow  
+- Redundant wireless paths provide both resilience and extra capacity  
+- Transport-layer considerations are critical for practical deployment  
 
-Redundant wireless paths provide both resilience and additional capacity.
+---
 
-Transport-layer considerations are critical for practical deployment.
+## 🔮 Future Work
 
-Future Work
+- Multi-band hybrid systems (60 GHz + sub-6 GHz fallback)  
+- Adaptive MCS selection based on link conditions  
+- ML-driven congestion prediction  
+- Experimental hardware validation  
 
-Multi-band hybrid systems (60 GHz + sub-6 GHz fallback)
+---
 
-Adaptive MCS selection based on link conditions
+## 🔗 Repository
 
-ML-driven congestion prediction
+GitHub: https://github.com/L00188373/-wigig-dcn-thesis
 
-Experimental hardware validation
+---
 
-Repository
+## ℹ️ About
 
-GitHub:
-https://github.com/L00188373/-wigig-dcn-thesis
+**MSc Thesis:** *60 GHz WiGig Wireless Links for Data Center Networks*  
+Simulation-based evaluation using ns-3.

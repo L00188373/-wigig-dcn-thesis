@@ -1,30 +1,97 @@
-ninja: no work to do.
-Starting Task 4: Hybrid Architecture Analysis
-===========================================
+TASK 4: HYBRID ARCHITECTURE WITH REALISTIC FLOWS
+Student: Anthony Malone (L00188373)
+Supervisor: Dr. Saim Ghafoor
+═══════════════════════════════════════════════════════
+
 Configuration:
-  Servers per rack: 20
-  ToR switches: 4
-  Spine switches: 2
-  Traffic pattern: hotspot
-  Wireless backup: ENABLED
-Creating nodes...
-Installing Internet stack...
-Creating network links...
-  ToR 0 -> Spine 0 (Wired only)
-  ToR 0 -> Spine 1 (Wired only)
-  ToR 1 -> Spine 0 (Wired only)
-  ToR 1 -> Spine 1 (Wired only)
-  ToR 2 -> Spine 0 (Hybrid - wired primary)
-  ToR 2 -> Spine 1 (Hybrid - wired primary)
-  ToR 3 -> Spine 0 (Hybrid - wired primary)
-  ToR 3 -> Spine 1 (Hybrid - wired primary)
-Creating wireless backup neighborways...
-  Neighborway: ToR 2 <-> ToR 1 (4 Gbps wireless)
-  Neighborway: ToR 2 <-> ToR 3 (4 Gbps wireless)
-  Neighborway: ToR 3 <-> ToR 1 (4 Gbps wireless)
-Wireless neighborways established!
-Configuring global routing...
-Generating HOTSPOT traffic pattern
-80% of traffic going to ToR 2 (hybrid)
-Running simulation for 30 seconds...
-Process was interrupted by the user
+  Topology:        4 ToR + 2 Spine
+  Servers:         20 per rack (80 total)
+  Hybrid ToRs:     ToR 1, 2, 3 (ToR 0 wired-only)
+  Scenario:        HOTSPOT (80% → ToR 2)
+  Wireless:        ENABLED
+  Simulation time: 30 seconds
+
+Creating wireless neighborways (ToR 1-2-3 mesh):
+  ToR 1 ↔ ToR 2: 2500Mbps
+  ToR 2 ↔ ToR 3: 2500Mbps
+  (ToR 0 remains wired-only - outside 2m range)
+
+═══════════════════════════════════════════════════════
+GENERATING REALISTIC DCN TRAFFIC
+═══════════════════════════════════════════════════════
+HOTSPOT SCENARIO: 80% of traffic → ToR 2 (Rack 2)
+
+Flow Configuration:
+  Total flows:      5000
+  Mice flows:       4750 (95%)
+  Elephant flows:   250 (5%)
+
+Flow Sizes:
+  Mice:     1 - 100 KB
+  Elephant: 1 - 50 MB
+═══════════════════════════════════════════════════════
+
+Traffic generation complete.
+Expected traffic:
+  Mice bytes:     237 MB
+  Elephant bytes: 6566 MB
+  Total bytes:    6803 MB
+  Avg throughput: 1814.22 Mbps
+
+Running simulation...
+
+═══════════════════════════════════════════════════════
+ANALYZING 10000 FLOWS
+═══════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════
+DETAILED RESULTS - HOTSPOT SCENARIO
+═══════════════════════════════════════════════════════
+Wireless: ENABLED (ToR 1-2-3 Hybrid)
+═══════════════════════════════════════════════════════
+
+MICE FLOWS (4750 flows, 95%):
+───────────────────────────────────────────────────────
+  Packets sent:     817979 (4.2%)
+  Packets received: 786793
+  Packets dropped:  31186 (3.81% loss rate)
+  Avg latency:      11.659 ms
+  Total throughput: 13704.3 Mbps
+
+  WHY: Mice flows are small but numerous. Each flow generates
+       ~35 packets on average. These are latency-sensitive control
+       packets (queries, ACKs, RPCs) critical for application performance.
+
+ELEPHANT FLOWS (250 flows, 5%):
+───────────────────────────────────────────────────────
+  Packets sent:     18566114 (95.8%)
+  Packets received: 18563602
+  Packets dropped:  2512 (0.01% loss rate)
+  Avg latency:      2.997 ms
+  Total throughput: 11979.9 Mbps
+
+  WHY: Elephant flows are few but large. Each flow generates
+       ~2,400 packets on average. These are bulk data transfers
+       (replication, VM migration) less sensitive to individual drops.
+
+OVERALL PERFORMANCE:
+───────────────────────────────────────────────────────
+  Total packets sent:    19384093
+  Total packets dropped: 33698 (0.17% overall loss)
+  Total throughput:      25684.2 Mbps
+
+CONGESTION ANALYSIS:
+───────────────────────────────────────────────────────
+  Hotspot location: ToR 2 (Rack 2)
+  Traffic pattern:  80% of flows → ToR 2
+  Bottleneck:       ToR 2 uplinks (2 × 1Gbps = 2 Gbps total)
+
+  WIRELESS OFFLOAD ACTIVE:
+    ToR 1 ↔ ToR 2: 2500Mbps wireless neighborway
+    ToR 2 ↔ ToR 3: 2500Mbps wireless neighborway
+    
+    Coverage: Racks 1 & 3 can offload via wireless (66% of sources)
+    Benefit:  Wireless paths bypass congested spine layer
+    Result:   Reduced packet drops, improved latency
+═══════════════════════════════════════════════════════
+

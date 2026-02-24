@@ -154,10 +154,10 @@ This suggests the need for:
 ├── 03_Task3_Distance_Study/
 ├── 03_Task5_Blockage_Failover/
 ├── 04_Task4_Hybrid_Architecture/
-│ ├── Code/
-│ ├── Results/
-│ ├── Graphs/
-│ └── Scripts/
+│   ├── Code/
+│   ├── Results/
+│   ├── Graphs/
+│   └── Scripts/
 ├── 05_Extended_Challenges/
 └── 05_Helper_Scripts/
 

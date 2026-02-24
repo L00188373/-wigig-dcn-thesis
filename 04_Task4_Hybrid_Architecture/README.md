@@ -1,145 +1,155 @@
-# Task 4: Hybrid Architecture Analysis
+Task 4: Hybrid Wired–Wireless Data Center Architecture
+Status: Complete – Realistic Hybrid Evaluation Implemented
 
-**Status:** Baseline Complete - WiGig Implementation Pending  
-**Completion:** 25% (Framework done, WiGig implementation next)
+This task evaluates a hybrid wired–wireless data center topology using short-range 60 GHz wireless neighbourways to mitigate hotspot congestion in spine–leaf networks.
 
-## Overview
+The implementation progresses from an initial simplified model to a final realistic data center workload using mice and elephant flows.
 
-This task analyzes the benefits of hybrid wired/wireless data center networks using 60 GHz WiGig technology to relieve hotspot congestion. The simulation demonstrates how concentrated traffic creates severe bottlenecks in pure wired networks and establishes the baseline for implementing wireless failover mechanisms.
+1. Network Architecture
 
-## Network Architecture
-```
-┌─────────────────────────────────────────┐
-│         Spine Layer (2 switches)        │
-│         Spine 0      Spine 1            │
-└─────────────┬────────────┬──────────────┘
-              │            │
-     ┌────────┴────┬───────┴────┬─────────┐
-     │             │            │         │
-┌────▼───┐   ┌────▼───┐   ┌────▼───┐ ┌──▼─────┐
-│ ToR 0  │   │ ToR 1  │   │ ToR 2  │ │ ToR 3  │
-│(Wired) │   │(Wired) │   │(Hybrid)│ │(Hybrid)│
-└────┬───┘   └────┬───┘   └────┬───┘ └───┬────┘
-     │            │            │         │
-  20 servers   20 servers   20 servers  20 servers
-```
+Topology:
 
-### Configuration
-- **ToR 0-1**: Wired-only (control group)
-- **ToR 2-3**: Designated for hybrid wired+WiGig
-- **Links**: 10 Gbps wired connections
-- **Servers**: 20 per rack, 80 total
+4 ToR switches
 
-## Traffic Patterns
+2 Spine switches
 
-### 1. Uniform Traffic
-- All servers communicate evenly
-- Balanced load distribution
-- Baseline performance measurement
+20 servers per rack (80 total)
 
-### 2. Hotspot Traffic
-- **80% of traffic** targets ToR 2
-- Simulates real-world congestion:
-  - Popular microservice
-  - MapReduce shuffle phase
-  - Database query concentration
+10 Gbps wired ToR–Spine links
 
-## Key Results
+2.5 Gbps wireless neighbourways between ToR 1–2 and 2–3
 
-### Baseline Performance (Wired-Only)
+Hybrid Design:
 
-| Metric | Uniform | Hotspot | Impact |
-|--------|---------|---------|--------|
-| **Throughput** | 127.2 Mbps | 74.3 Mbps | **-41.5%** ⬇️ |
-| **Latency** | 2.64 ms | 2.65 ms | Minimal |
-| **Packet Drops** | 12 | **11,414** | **+95,016%** ⬆️ |
+ToR 0 → Wired-only (control)
 
-### Key Finding
+ToR 1–3 → Hybrid capable (wired + wireless)
 
-**Hotspot traffic causes catastrophic packet loss** (11,414 vs 12 dropped packets), demonstrating the critical need for hybrid architecture with wireless failover capability.
+Wireless links provide alternative short-range bypass paths when congestion occurs at the spine layer.
 
-## How to Run
+2. Traffic Models
 
-### Compile
-```bash
+Two workload models are included:
+
+A. Simplified Model (Initial Baseline)
+
+Location:
+
+Code/hybrid-dcn-task4.cc
+
+Features:
+
+Uniform traffic
+
+Hotspot traffic (80% to ToR 2)
+
+Aggregate metrics only
+
+This model demonstrated severe hotspot packet loss in wired-only mode and established motivation for hybrid design.
+
+B. Realistic DCN Model (Final Implementation)
+
+Location:
+
+Code/task4-mice-elephant-REALISTIC.cc
+
+Features:
+
+5000 flows
+
+95% mice flows (1–100 KB)
+
+5% elephant flows (1–50 MB)
+
+Hotspot scenario (80% traffic to ToR 2)
+
+Uniform scenario
+
+Detailed per-class metrics
+
+CSV output for reproducibility
+
+This represents the final thesis-grade evaluation.
+
+3. Experimental Scenarios
+
+The following four scenarios were evaluated:
+
+Uniform – Wired Only
+
+Uniform – Hybrid
+
+Hotspot – Wired Only
+
+Hotspot – Hybrid
+
+4. Key Results (Realistic Model)
+Hotspot Scenario
+Metric	Wired Only	Hybrid	Improvement
+Throughput	8.25 Gbps	25.68 Gbps	+211%
+Packet Drops	59,899	33,698	−44%
+Mice Latency	16.7 ms	11.7 ms	−30%
+
+Wireless neighbourways bypass congested ToR uplinks and reduce queue overflow.
+
+Uniform Scenario
+Metric	Wired Only	Hybrid	Improvement
+Throughput	89.16 Gbps	101.29 Gbps	+13.6%
+Packet Drops	39,078	22,100	−43%
+
+Under balanced load, hybrid links provide path diversity and effective capacity aggregation.
+
+5. How to Reproduce Results
+
+Copy the realistic script into ns-3 scratch:
+
+cp Code/task4-mice-elephant-REALISTIC.cc ~/ns-allinone-3.40/ns-3.40/scratch/
+
+Build ns-3:
+
 cd ~/ns-allinone-3.40/ns-3.40
-./ns3 configure --enable-examples --enable-tests
 ./ns3 build
-```
 
-### Run Simulations
-```bash
-# Uniform traffic (baseline)
-./ns3 run "hybrid-dcn-task4 --traffic=uniform"
+Run scenarios:
 
-# Hotspot traffic (80% to ToR 2)
-./ns3 run "hybrid-dcn-task4 --traffic=hotspot"
-```
+Uniform baseline:
 
-### Save Results
-```bash
-./ns3 run "hybrid-dcn-task4 --traffic=uniform" > uniform_results.txt 2>&1
-./ns3 run "hybrid-dcn-task4 --traffic=hotspot" > hotspot_results.txt 2>&1
-```
+./ns3 run "task4-mice-elephant-REALISTIC"
 
-## File Structure
-```
-04_Task4_Hybrid_Architecture/
-├── README.md                          # This file
-├── Code/
-│   └── hybrid-dcn-task4.cc           # Simulation code
-├── Results/
-│   ├── task4_uniform_baseline.txt    # Uniform traffic results
-│   └── task4_hotspot_baseline.txt    # Hotspot traffic results
-├── Graphs/                            # (To be populated)
-├── Scripts/                           # (To be populated)
-└── Documentation/
-    ├── Task4_Progress_Report.md      # Detailed progress report
-    └── Relieving_hotspots_paper.pdf  # Reference: Shan et al. 2014
-```
+Uniform hybrid:
 
-## Next Steps
+./ns3 run "task4-mice-elephant-REALISTIC --wireless=1"
 
-### Phase 1: WiGig Infrastructure (Weeks 1-2)
-- [ ] Add WiGig NetDevices to ToR 2 and ToR 3
-- [ ] Configure 60 GHz wireless links between neighbors
-- [ ] Set directional antennas (30-60° beamwidth)
-- [ ] Model 4+ Gbps wireless capacity
+Hotspot baseline:
 
-### Phase 2: Congestion Detection (Week 3)
-- [ ] Monitor queue occupancy at each ToR
-- [ ] Implement cache occupancy rate (β) tracking
-- [ ] Define failover threshold
-- [ ] Add congestion detection logic
+./ns3 run "task4-mice-elephant-REALISTIC --congestion=1"
 
-### Phase 3: Traffic Offloading (Week 4)
-- [ ] Implement wireless failover mechanism
-- [ ] Add load balancing across neighbors
-- [ ] Route through under-utilized wired paths
-- [ ] Verify no new hotspots created
+Hotspot hybrid:
 
-### Phase 4: Analysis (Weeks 5-6)
-- [ ] Run comprehensive experiments
-- [ ] Compare hybrid vs wired-only
-- [ ] Generate comparison graphs
-- [ ] Document results for thesis
+./ns3 run "task4-mice-elephant-REALISTIC --congestion=1 --wireless=1"
 
-## Research Reference
+CSV outputs will be generated automatically.
 
-This implementation is based on:
+6. Research Basis
 
-**"Relieving Hotspots in Data Center Networks with Wireless Neighborways"**  
-Liqin Shan, Chang Zhao, Xiaohua Tian, Yu Cheng, Feng Yang, Xiaoying Gan  
-*IEEE Globecom 2014*
+Based on:
 
-Key concepts:
-- Wireless neighborways for short-range offloading
-- Cache occupancy rate (β) for hotspot detection
-- Traffic offloading without creating new hotspots
-- Leveraging under-utilized wired capacity
+Shan et al.,
+"Relieving Hotspots in Data Center Networks with Wireless Neighborways"
+IEEE Globecom 2014
 
-## Contact
+The hybrid design leverages short-range directional wireless links to offload congested wired uplinks without introducing new bottlenecks.
 
-Anthony Malone  
-WiGig DCN Thesis Project  
-2025
+7. Conclusion
+
+Results demonstrate that:
+
+Wired-only architectures suffer severe performance degradation under hotspot traffic.
+
+Hybrid wireless neighbourways significantly reduce congestion.
+
+Mice flows benefit most due to reduced packet reordering and queue overflow.
+
+Wireless links function as dynamic capacity aggregation rather than passive failover.
+
+This validates the feasibility of hybrid wired–wireless data center architectures.

@@ -146,7 +146,9 @@ This suggests the need for:
 
 ---
 
-## 📁 Repository Structure
+### 📁 Repository Structure
+
+```text
 ├── 00_Documentation/
 ├── 01_Simulation_Code/
 ├── 02_Task1_Beamwidth_Analysis/
@@ -160,7 +162,6 @@ This suggests the need for:
 │   └── Scripts/
 ├── 05_Extended_Challenges/
 └── 05_Helper_Scripts/
-
 ---
 
 ## 🧠 Contributions

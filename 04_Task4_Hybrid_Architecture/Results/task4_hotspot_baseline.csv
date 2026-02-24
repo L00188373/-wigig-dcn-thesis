@@ -1,0 +1,3 @@
+Scenario,Wireless,FlowType,FlowCount,TxPackets,RxPackets,DroppedPackets,LossRate,AvgLatency,Throughput
+Hotspot,No,Mice,4750,876052,822375,53677,6.13,16.686,4064.1
+Hotspot,No,Elephant,250,14837997,14831775,6222,0.04,4.360,4184.4

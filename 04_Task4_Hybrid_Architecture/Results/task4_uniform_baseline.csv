@@ -1,0 +1,3 @@
+Scenario,Wireless,FlowType,FlowCount,TxPackets,RxPackets,DroppedPackets,LossRate,AvgLatency,Throughput
+Uniform,No,Mice,4750,885186,848909,36277,4.10,16.893,58409.1
+Uniform,No,Elephant,250,17434996,17432195,2801,0.02,2.979,30753.4

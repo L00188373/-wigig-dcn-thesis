@@ -1,9 +1,9 @@
-# 60 GHz WiGig–Augmented Data Center Networks  
-## Simulation-Based Evaluation of Hybrid Wired–Wireless Architectures
+# On-Demand 60 GHz Wireless Neighbourways for Hotspot Relief in Data Centre Networks  
+## Simulation-Based Evaluation using ns-3
 
 **Student:** L00188373  
 **Institution:** Atlantic Technological University (ATU)  
-**Programme:** MSc in Data Analytics  
+**Programme:** MSc in Computing in Cloud Technologies
 **Supervisor:** Dr. Saim Ghafoor  
 **Status:** ✅ Thesis Submitted  
 
@@ -193,5 +193,5 @@ GitHub: https://github.com/L00188373/-wigig-dcn-thesis
 
 ## ℹ️ About
 
-**MSc Thesis:** *60 GHz WiGig Wireless Links for Data Center Networks*  
+**MSc Thesis:** *On-Demand 60 GHz Wireless Neighbourways for Hotspot Relief in Data Centre Networks*
 Simulation-based evaluation using ns-3.

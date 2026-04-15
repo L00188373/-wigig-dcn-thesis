@@ -3,9 +3,9 @@
 
 **Student:** L00188373  
 **Institution:** Atlantic Technological University (ATU)  
-**Programme:** MSc in Computing in Cloud Technologies
+**Programme:** MSc in Computing in Cloud Technologies  
 **Supervisor:** Dr. Saim Ghafoor  
-**Status:** ✅ Thesis Submitted  
+**Status:** Thesis Submitted   
 
 ---
 
